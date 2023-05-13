@@ -1,0 +1,35 @@
+{% load static bootstrap5 %}
+<!doctype html>
+<html lang="pt-br" translate="no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FerramentasSpy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+<form action="" method="POST" id="login" autocomplete="off" novalidate>
+    <div class="text-center mb-2">
+	<p><a href="https://wa.me/5519998212746"><img style="display: block; margin-left: auto; margin-right: auto;" height="148" width="421" src="https://sollussc.com.br/wp-content/uploads/2019/10/whatsapp-bota%CC%83o-1024x360.png" /></a></p>
+
+    </div>
+    <div class="card">
+        <div class="card-body">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button class='glowing-btn'><span class='glowing-txt'>A<span class='faulty-letter'>CE</span>SSAR</span>
+                </button>
+            {% endbuttons %}
+        </div>
+    </div>
+
+    <div class="text-center mt-5 text-muted">
+        {{ site.webapp_name }} - Todos os direitos reservados<br>
+        Versão: v.3.0.7a
+    </div>
+</form>
+</body>
+</html>

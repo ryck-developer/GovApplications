@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: spy
+    restart: always
+    command: sh -c "python manage.py runserver 0.0.0.0:7000"
+    ports:
+      - 7000:7000
+    volumes:
+      - .:/spy
+    env_file:
+      - .env
+
+volumes:
+  appdb:
