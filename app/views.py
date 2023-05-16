@@ -25,11 +25,6 @@ from rest_framework.renderers import JSONRenderer
 
 
 
-
-
-
-
-
 class AuthenticationForm(BaseAuthenticationForm):
     username = forms.EmailField(label='Email', widget=forms.TextInput(attrs={"autofocus": "true", 'type': 'email'}))
 
@@ -57,7 +52,6 @@ class LoginView(LoginView):
 
 
         return response
-
 
 
 
@@ -102,36 +96,22 @@ class LogoutView(View):
         return redirect(reverse_lazy('login'))
 
 
+
 @method_decorator(login_required, name='dispatch')
 class IndexView(View):
-    def get(self,request):
-        return_query = self.get_context_data()
-        
-        context = {
-            'adspy':return_query['adspy'],
-            'advault':return_query['advault'],
-            'pipiads':return_query['pipiads'],
-            'bispy':return_query['bispy'],
-            'adheart2':return_query['adheart2']
-        }
-
-        response = render(request, 'app/index.html', context)
-
-
-        return response
-     
-    def get_context_data(self, **kwargs):
-        return {
-            'adspy': Product.objects.filter(user=self.request.user, expires__gte=timezone.localtime().date(), name=Product.ProductName.ADSPY).first(),
-            'advault': Product.objects.filter(user=self.request.user, expires__gte=timezone.localtime().date(), name=Product.ProductName.ADVAULT).first(),
-            'pipiads': Product.objects.filter(user=self.request.user, expires__gte=timezone.localtime().date(), name=Product.ProductName.PIPIADS).first(),
-            'bispy': Product.objects.filter(user=self.request.user, expires__gte=timezone.localtime().date(), name=Product.ProductName.BISPY).first(),
-            'adheart2': Product.objects.filter(user=self.request.user, expires__gte=timezone.localtime().date(), name=Product.ProductName.ADHEART2).first()
-        }
-
-
-
-
+    template_name = 'app/index.html'
+    
+    def get(self, request):
+        products = Product.objects.filter(user=request.user)
+        product_names = [
+            {
+                'nome': product.name,
+                'url': product.link,
+                'photo': product.img,
+            } for product in products
+        ]
+        context = {'product_names': product_names}
+        return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
 class AdspyView(TemplateView):
@@ -193,8 +173,8 @@ class BigspyView(TemplateView):
 
 class PipiadsView(TemplateView):
     def get(self, request, *args, **kwargs):
-        # if not Product.objects.filter(user=request.user, expires__gte=timezone.localtime().date(), name=Product.ProductName.ADSPY).first():
-        #     return redirect(reverse_lazy('index'))
+        if not Product.objects.filter(user=request.user, expires__gte=timezone.localtime().date(), name=Product.ProductName.ADSPY).first():
+            return redirect(reverse_lazy('index'))
         template_name = 'app/pipiads.html'
         return render(request,template_name)
     
@@ -206,6 +186,21 @@ class AdheartNodeView(TemplateView):
         if not Product.objects.filter(user=request.user, expires__gte=timezone.localtime().date(), name=Product.ProductName.ADHEART2).first():
             return redirect(reverse_lazy('index'))
         return super().get(request, *args, **kwargs)
+    
+
+@method_decorator(login_required, name='dispatch')
+class TesteSystem(TemplateView):
+    template_name = 'app/adheart-node.html'
+    print("-----------------------------2")
+    def dispatch(self, request, *args, **kwargs):
+        print("-----------------------------------")
+        if not self.has_systemteste_product(request.user):
+            return redirect(reverse_lazy('index'))
+        return super().dispatch(request, *args, **kwargs)
+
+    def has_systemteste_product(self, user):
+        return Product.objects.filter(user=user, expires__gte=timezone.localtime().date(), name=Product.ProductName.ADHEART2).exists()
+
 
 
 class HandlerCookie(APIView):

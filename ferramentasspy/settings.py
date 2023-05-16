@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-^d92%lo)i)n8c3q56zpgf#8=4$e^2yy*w!j2o@(fvmusnb$y8r
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://app.ferramentasspy.online']
+#CSRF_TRUSTED_ORIGINS = ['https://app.ferramentasspy.online']
 
 
 # Application definition
@@ -125,6 +125,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+STATIC_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [

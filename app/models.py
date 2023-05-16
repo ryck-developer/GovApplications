@@ -61,9 +61,12 @@ class Product(UUIDModel, TimeStampedModel):
         PIPIADS = 'PIPIADS', 'Pipiads'
         BISPY = 'BISPY', 'Bispy'
         ADHEART2 = 'ADHEART2','Adheart2'
+        SYSTEMTESTE = 'SYSTEMTESTE','Systemteste'
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
     name = models.CharField(max_length=100, choices=ProductName.choices, verbose_name='Nome')
+    link = models.CharField(max_length=100, verbose_name='Link da Imagem', blank=True, null=True)
+    img = models.ImageField(upload_to='pictures/', verbose_name='Selecione a Imagem', blank=True, null=True)
     expires = models.DateField(null=True, verbose_name='Expira em')
 
     class Meta:
