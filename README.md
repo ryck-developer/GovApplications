@@ -1,0 +1,7 @@
+O token de autenticação é uma chave exclusiva que é usada para validar a identidade de um microserviço. Esse token é gerado pela plataforma de gerenciamento e é enviado junto com as solicitações feitas pelos microserviços. Quando um microserviço envia uma solicitação para a plataforma de gerenciamento, a plataforma verifica se o token está presente e se é válido.
+
+Se o token for válido, a plataforma permite que o microserviço acesse os recursos solicitados. Caso contrário, a solicitação é rejeitada, impedindo que o microserviço acesse os recursos.
+
+No entanto, é importante lembrar que a segurança do sistema de autenticação por token depende da maneira como os tokens são gerados e gerenciados. Se um token for gerado de maneira insegura ou se o seu uso não for controlado adequadamente, ele pode ser facilmente interceptado ou copiado, comprometendo a segurança do sistema.
+
+Por isso, é fundamental que sejam implementadas práticas seguras para gerar, armazenar e gerenciar os tokens de autenticação, como a utilização de algoritmos de criptografia robustos e o controle do acesso aos tokens. Além disso, é recomendável que os tokens sejam rotacionados periodicamente, para minimizar os riscos de possíveis violações de segurança.

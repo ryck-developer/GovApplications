@@ -191,9 +191,7 @@ class AdheartNodeView(TemplateView):
 @method_decorator(login_required, name='dispatch')
 class TesteSystem(TemplateView):
     template_name = 'app/adheart-node.html'
-    print("-----------------------------2")
     def dispatch(self, request, *args, **kwargs):
-        print("-----------------------------------")
         if not self.has_systemteste_product(request.user):
             return redirect(reverse_lazy('index'))
         return super().dispatch(request, *args, **kwargs)
